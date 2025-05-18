@@ -1,6 +1,10 @@
 import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -49,6 +53,30 @@ export default function Home() {
           >
             Read our docs
           </a>
+        </div>
+
+        <div className="flex flex-col gap-2 items-center">
+          {session ? (
+            <>
+              <span className="text-green-600">Signed in as {session.user?.email || session.user?.name}</span>
+              {typeof session === 'object' && 'id_token' in session && session.id_token && (
+                <div className="w-full max-w-2xl mt-2">
+                  <label className="block text-xs font-semibold mb-1 text-gray-700">ID Token:</label>
+                  <pre className="break-all bg-gray-900 text-green-200 text-xs p-3 rounded border border-gray-300 shadow-inner overflow-x-auto">
+                    {session.id_token as string}
+                  </pre>
+                </div>
+              )}
+              <form action="/api/auth/signout" method="POST">
+                <input type="hidden" name="callbackUrl" value="/" />
+                <button type="submit" className="rounded bg-red-500 text-white px-4 py-2 mt-2">Sign out</button>
+              </form>
+            </>
+          ) : (
+            <Link href="/api/auth/signin/keycloak?callbackUrl=/" legacyBehavior>
+              <a className="rounded bg-blue-600 text-white px-4 py-2">Sign in with Keycloak</a>
+            </Link>
+          )}
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
