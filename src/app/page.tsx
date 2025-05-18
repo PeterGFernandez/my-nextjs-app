@@ -73,8 +73,10 @@ export default async function Home() {
               </form>
             </>
           ) : (
-            <Link href="/api/auth/signin/keycloak?callbackUrl=/" legacyBehavior>
-              <a className="rounded bg-blue-600 text-white px-4 py-2">Sign in with Keycloak</a>
+            <Link
+              href="/api/auth/signin/keycloak?callbackUrl=/"
+              className="rounded bg-blue-600 text-white px-4 py-2">
+              Sign in with Keycloak
             </Link>
           )}
         </div>

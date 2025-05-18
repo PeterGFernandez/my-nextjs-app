@@ -17,8 +17,10 @@ export default async function ProfilePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Not signed in</h1>
-        <Link href="/api/auth/signin/keycloak?callbackUrl=/profile" legacyBehavior>
-          <a className="rounded bg-blue-600 text-white px-4 py-2">Sign in with Keycloak</a>
+        <Link
+          href="/api/auth/signin/keycloak?callbackUrl=/profile"
+          className="rounded bg-blue-600 text-white px-4 py-2">
+          Sign in with Keycloak
         </Link>
       </div>
     );
@@ -46,8 +48,8 @@ export default async function ProfilePage() {
         <input type="hidden" name="callbackUrl" value="/" />
         <button type="submit" className="rounded bg-red-500 text-white px-4 py-2">Sign out</button>
       </form>
-      <Link href="/" legacyBehavior>
-        <a className="mt-4 text-blue-600 underline">Back to Home</a>
+      <Link href="/" className="mt-4 text-blue-600 underline">
+        Back to Home
       </Link>
     </div>
   );
