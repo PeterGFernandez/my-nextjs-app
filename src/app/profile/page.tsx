@@ -34,6 +34,16 @@ export default async function ProfilePage() {
       )}
       <div className="mb-2 text-lg">Name: <span className="font-semibold">{session.user?.name}</span></div>
       <div className="mb-2 text-lg">Email: <span className="font-semibold">{session.user?.email}</span></div>
+      <div className="flex gap-2 mb-4">
+        <a
+          href={`${process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER}/account`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded bg-blue-700 text-white px-3 py-1 text-xs font-semibold hover:bg-blue-800 transition"
+        >
+          Manage Account
+        </a>
+      </div>
       <div>
       {typeof session === 'object' && session.id_token && (
         <div className="w-full max-w-2xl mt-4">

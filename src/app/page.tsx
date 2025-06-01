@@ -59,18 +59,26 @@ export default async function Home() {
           {session ? (
             <>
               <span className="text-green-600">Signed in as {session.user?.email || session.user?.name}</span>
-              {typeof session === 'object' && 'id_token' in session && session.id_token && (
+              {/* typeof session === 'object' && 'id_token' in session && session.id_token && (
                 <div className="w-full max-w-2xl mt-2">
                   <label className="block text-xs font-semibold mb-1 text-gray-700">ID Token:</label>
                   <pre className="break-all bg-gray-900 text-green-200 text-xs p-3 rounded border border-gray-300 shadow-inner overflow-x-auto">
                     {session.id_token as string}
                   </pre>
                 </div>
-              )}
-              <form action="/api/auth/signout" method="POST">
-                <input type="hidden" name="callbackUrl" value="/" />
-                <button type="submit" className="rounded bg-red-500 text-white px-4 py-2 mt-2">Sign out</button>
-              </form>
+              )*/}
+              <div className="flex gap-2 mt-2">
+                <Link
+                  href="/profile"
+                  className="rounded bg-gray-700 text-white px-4 py-2"
+                >
+                  Profile
+                </Link>
+                <form action="/api/auth/signout" method="POST">
+                  <input type="hidden" name="callbackUrl" value="/" />
+                  <button type="submit" className="rounded bg-red-500 text-white px-4 py-2">Sign out</button>
+                </form>
+              </div>
             </>
           ) : (
             <Link
