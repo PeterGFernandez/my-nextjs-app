@@ -3,7 +3,7 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), in which which I've also been using AI, primarily to implement [Authentication](https://discovery.cevolution.co.uk/ciam/authenticate/) and [Authorization](https://discovery.cevolution.co.uk/ciam/authorize/) as part of a CIAM Integration. 
 
-The application is also a companion to the various Vibe Coding articles published on the [Discover CIAM Blog](https://discovery.cevolution.co.uk/ciam/?s=Vibe+Coding), and the various code branches reflect the various states of the application as related to each article. The main branch is typically kept up-to-date with the development state overall.
+The application is also a companion to the various Vibe Coding articles published on the [Discover CIAM Blog](https://discovery.cevolution.co.uk/ciam/?s=Vibe+Coding), and the various code branches reflect the various states of the application as related to each article. The main branch is typically kept up-to-date with the latest development overall.
 
 ## Getting Started
 
