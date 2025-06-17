@@ -21,21 +21,24 @@ bun dev
 
 Then open [http://localhost:3000](http://localhost:3000) with your browser to see the result (the application is typically accessible via port `3000` though this may change based on your system configuration).
 
-You can start editing the page by modifying `app/page.tsx`, and the page will typically auto-update as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can start editing the page by modifying `app/page.tsx`, and the page will typically auto-update as you edit the file. The project also uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
-To learn more about CIAM and building a CIAM integration, check out the various resources at [Discover CIAM](https://discovery.cevolution.co.uk/ciam/). To lear more about Next.js, take a look at the following resources:
+To learn more about CIAM and building a CIAM integration, check out the various resources at [Discover CIAM](https://discovery.cevolution.co.uk/ciam/). To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - where your feedback and contributions are always welcome!
 
 ## Deployment
 
 The easiest way to deploy a Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), brought to you by the creators of Next.js. Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-For this application you will also need a suitable CIAM provider that is compatible with industry standard protocols including OIDC and OAuth 2.0. I use the open-source Keycloak service for this in a DIY fashion and you can read more about this in my article [here](https://discovery.cevolution.co.uk/ciam/open-source-ciam-using-keycloak/) 
+For this application you will also need a suitable CIAM provider that is compatible with industry standard protocols including OIDC and OAuth 2.0. I personally use the open-source Keycloak service for this in a DIY fashion, and you can read more about this in my article [here](https://discovery.cevolution.co.uk/ciam/open-source-ciam-using-keycloak/) 
+
+## Feedback
+
+We appreciate feedback and contribution to this repo, and invite you to [use issue tracking here on GitHub](https://github.com/PeterGFernandez/my-nextjs-app/issues). However, in the interest of _Responsible Disclosure_, please do not report security vulnerabilities on the public GitHub issue tracker and prefer to DM me instead. Thank you.
+
+Additionally, you can check out [the Next.js GitHub repository](https://github.com/vercel/next.js), where your feedback and contributions are always welcome, too!
+
