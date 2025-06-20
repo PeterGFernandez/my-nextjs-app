@@ -22,12 +22,19 @@ export const authOptions: NextAuthOptions = {
       if (account && account.id_token) {
         token.id_token = account.id_token;
       }
+      if (account && account.access_token) {
+        token.access_token = account.access_token;
+      }
       return token;
     },
     async session({ session, token }) {
       if (token.id_token) {
         // @ts-expect-error: Add id_token to session object
         session.id_token = token.id_token;
+      }
+      if (token.access_token) {
+        // @ts-expect-error: Add access_token to session object
+        session.access_token = token.access_token;
       }
       return session;
     },
