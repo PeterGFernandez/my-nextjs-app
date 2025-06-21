@@ -1,10 +1,27 @@
+'use client';
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { useSession, signIn, signOut, SessionProvider } from "next-auth/react";
 import Link from "next/link";
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
+export default function Home() {
+  return (
+    <SessionProvider>
+      <HomeContent />
+    </SessionProvider>
+  );
+}
+
+function HomeContent() {
+  const { data: session } = useSession();
+
+  // Helper to sign out from both NextAuth and Keycloak
+  const handleSignOut = async () => {
+    // Sign out from NextAuth (ends local session)
+    await signOut({ redirect: false });
+    // Redirect to Keycloak's end session endpoint
+    window.location.href = `${process.env.NEXT_PUBLIC_KEYCLOAK_LOGOUT_URL || '/api/auth/logout'}`;
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -74,18 +91,20 @@ export default async function Home() {
                 >
                   Profile
                 </Link>
-                <form action="/api/auth/signout" method="POST">
-                  <input type="hidden" name="callbackUrl" value="/" />
-                  <button type="submit" className="rounded bg-red-500 text-white px-4 py-2">Sign out</button>
-                </form>
+                <button
+                  onClick={handleSignOut}
+                  className="rounded bg-red-500 text-white px-4 py-2"
+                >
+                  Sign out
+                </button>
               </div>
             </>
           ) : (
-            <Link
-              href="/api/auth/signin/keycloak?callbackUrl=/"
+            <button
+              onClick={() => signIn('keycloak', { callbackUrl: '/' })}
               className="rounded bg-blue-600 text-white px-4 py-2">
               Sign in with Keycloak
-            </Link>
+            </button>
           )}
         </div>
       </main>

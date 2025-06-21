@@ -38,7 +38,7 @@ For this application you will also need a suitable CIAM provider that is compati
 
 ## Feedback
 
-We appreciate feedback and contribution to this repo, and invite you to [use issue tracking here on GitHub](https://github.com/PeterGFernandez/my-nextjs-app/issues). However, in the interest of _Responsible Disclosure_, please do not report security vulnerabilities on the public GitHub issue tracker and prefer to DM me instead. Thank you.
+Feedback and contributions to this repo are appreciated, and you are invited to [use issue tracking here on GitHub](https://github.com/PeterGFernandez/my-nextjs-app/issues). However, in the interest of _Responsible Disclosure_, please do not report security vulnerabilities on the public GitHub issue tracker and prefer to DM me instead. Thank you.
 
 Additionally, you can check out [the Next.js GitHub repository](https://github.com/vercel/next.js), where your feedback and contributions are always welcome, too!
 
