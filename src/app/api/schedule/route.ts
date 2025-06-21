@@ -52,12 +52,39 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const auth = await withAuth(req);
   if (auth) return auth;
-  const { title, time } = await req.json();
-  if (!title || !time) {
+  // Extract and verify token for scope and audience
+  const authHeader = req.headers.get('authorization') || req.headers.get('Authorization') || undefined;
+  let tokenPayload: unknown;
+  try {
+    tokenPayload = await verifyAccessToken(authHeader);
+  } catch {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  function isTokenPayload(obj: unknown): obj is { scope?: string; aud?: string | string[] } {
+    return typeof obj === 'object' && obj !== null && ('scope' in obj || 'aud' in obj);
+  }
+  if (!isTokenPayload(tokenPayload)) {
+    return NextResponse.json({ error: 'Invalid token payload' }, { status: 401 });
+  }
+  // Check for required scope
+  const scopes = (tokenPayload.scope || '').split(' ');
+  if (!scopes.includes('schedule::create')) {
+    return NextResponse.json({ error: 'Forbidden: missing schedule::create scope' }, { status: 403 });
+  }
+  // Check for correct audience (aud can be a string or array)
+  const aud = tokenPayload.aud;
+  const hasAudience = Array.isArray(aud)
+    ? aud.includes('org.my-nextjs-app.schedule')
+    : aud === 'org.my-nextjs-app.schedule';
+  if (!hasAudience) {
+    return NextResponse.json({ error: 'Forbidden: invalid audience' }, { status: 403 });
+  }
+  const { title, date } = await req.json();
+  if (!title || !date) {
     return NextResponse.json({ error: 'Missing title or time' }, { status: 400 });
   }
   const id = Math.random().toString(36).substr(2, 9);
-  const schedule: Schedule = { id, title, time };
+  const schedule: Schedule = { id, title, date };
   schedules.push(schedule);
   return NextResponse.json(schedule, { status: 201 });
 }
@@ -65,15 +92,15 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const auth = await withAuth(req);
   if (auth) return auth;
-  const { id, title, time } = await req.json();
-  if (!id || !title || !time) {
+  const { id, title, date } = await req.json();
+  if (!id || !title || !date) {
     return NextResponse.json({ error: 'Missing id, title, or time' }, { status: 400 });
   }
   const idx = schedules.findIndex((s: Schedule) => s.id === id);
   if (idx === -1) {
     return NextResponse.json({ error: 'Schedule not found' }, { status: 404 });
   }
-  schedules[idx] = { id, title, time };
+  schedules[idx] = { id, title, date };
   return NextResponse.json(schedules[idx]);
 }
 

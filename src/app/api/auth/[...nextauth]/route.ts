@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
       issuer: process.env.KEYCLOAK_ISSUER!,
       authorization: {
         params: {
-          scope: 'openid profile email schedule::read',
+          scope: 'openid profile email schedule::read schedule::create',
           audience: 'org.my-nextjs-app.schedule',
         },
       },

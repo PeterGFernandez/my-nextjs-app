@@ -8,7 +8,7 @@ export interface Event {
 export interface Schedule {
   id: string;
   title: string;
-  time: string;
+  date: string;
   events?: Event[];
 }
 

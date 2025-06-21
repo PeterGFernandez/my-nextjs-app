@@ -58,29 +58,6 @@ function SchedulePageContent() {
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    try {
-      const method = editingId ? "PUT" : "POST";
-      const url = editingId ? `/api/schedule/${editingId}` : "/api/schedule";
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      const accessToken = getAccessToken();
-      if (accessToken) headers["Authorization"] = `Bearer ${accessToken}`;
-      const res = await fetch(url, {
-        method,
-        headers,
-        body: JSON.stringify({ title: form.title, date: form.date }),
-      });
-      if (!res.ok) throw new Error("Failed to save schedule");
-      setForm({ title: "", date: "" });
-      setEditingId(null);
-      fetchSchedules();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    }
-  }
-
   async function handleDelete(id: string) {
     if (!confirm("Delete this schedule?")) return;
     setError(null);
@@ -111,9 +88,10 @@ function SchedulePageContent() {
     <div style={{ maxWidth: 600, margin: "2rem auto", padding: 24, background: "#fff", borderRadius: 8 }}>
       <h1>Schedules</h1>
       {error && <div style={{ color: "red" }}>{error}</div>}
-      <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>
+      <form action="/api/schedule/submit" method="POST" style={{ marginBottom: 24 }}>
         <input
           type="text"
+          name="title"
           placeholder="Title"
           value={form.title}
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -122,11 +100,13 @@ function SchedulePageContent() {
         />
         <input
           type="date"
+          name="date"
           value={form.date}
           onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
           required
           style={{ marginRight: 8 }}
         />
+        <input type="hidden" name="editingId" value={editingId ?? ''} />
         <button type="submit">{editingId ? "Update" : "Create"}</button>
         {editingId && <button type="button" onClick={() => { setEditingId(null); setForm({ title: "", date: "" }); }}>Cancel</button>}
       </form>
