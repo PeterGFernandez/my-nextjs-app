@@ -1,9 +1,22 @@
 # my-nextjs-app
 
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), in which which I've also been using AI, primarily to implement [Authentication](https://discovery.cevolution.co.uk/ciam/authenticate/) and [Authorization](https://discovery.cevolution.co.uk/ciam/authorize/) as part of a CIAM Integration. The application is also a companion to the various Vibe Coding articles published on the [Discover CIAM Blog](https://discovery.cevolution.co.uk/ciam/?s=Vibe+Coding), and the various code branches reflect the various states of the application as related to each article. 
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), in which which I've also been using AI, primarily to implement [Authentication](https://discovery.cevolution.co.uk/ciam/authenticate/) and [Authorization](https://discovery.cevolution.co.uk/ciam/authorize/) as part of a CIAM Integration. 
+This branch is associated with the article [here](https://discovery.cevolution.co.uk/ciam/vibe-coded-authn/), with some additional updates related to the User Account and User Account presentation, and with my take on the followup exercises that were left for the reader to tackle (in no particular order):
 
-The application is also a companion to the various Vibe Coding articles published on the [Discover CIAM Blog](https://discovery.cevolution.co.uk/ciam/?s=Vibe+Coding), and the various code branches reflect the various states of the application as related to each article. This branch is associated with the article [here](https://discovery.cevolution.co.uk/ciam/vibe-coded-authn/), with some additional updates related to the User Account and User Account presentation.
+- Skipping the NextAuth.js Signin page wasn't as straightforward for the AI as I'd of hoped 🤷🏻‍♂️ In the end I ended up getting the AI to convert the main page to being Client Side Rendered (CSR) and then told it to use the provider specific version of the `signIn()` method as described [here](https://next-auth.js.org/getting-started/client#signin). Arguably more of a limitation with NextAuth.js I feel, rather than with the AI.   
+
+- Converting to CSR ultimately fixed the legacy behaviour issue too, though to be fair that was a relatively easy one to address by simply following the `Learn more:` link to the docs 😎
+
+- For signout from Keycloak when signing out from the application, the AI recommended `NEXT_PUBLIC_KEYCLOAK_LOGOUT_URL` as an additional `.env` entry and redirecting after calling `signOut({redirect:false})` (the latter facilitated by moving to a CSR pattern). Of course, Copilot made the necessary code changes for me 😁. It felt a little "clunky" if I'm honest, but it got the job done more or less. Perhaps this was again something of a limitiation in NextAuth.js rather that with the AI, and perhaps the price you pay for not using an IdP integrated SDK 🤷🏻‍♂️ My `.env` ended up looking something like the following:
+
+```
+KEYCLOAK_CLIENT_ID=nextjs-app
+KEYCLOAK_ISSUER=https://<My Keycloak Domain>/realms/Cevolution
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_KEYCLOAK_ISSUER=${KEYCLOAK_ISSUER}
+NEXT_PUBLIC_KEYCLOAK_LOGOUT_URL=${KEYCLOAK_ISSUER}/protocol/openid-connect/logout?redirect_uri=http%3A%2F%2Flocalhost%3A3000
+```
 
 ## Getting Started
 
